@@ -38,35 +38,29 @@ logger = logging.getLogger(__name__)
 
 
 class BreaklightteamblueApp(VehicleApp):
-
-
     def __init__(self, vehicle_client: Vehicle):
         super().__init__()
         self.Vehicle = vehicle_client
 
     async def on_start(self):
-        print = plugins.Terminal.print
+        #print = plugins.Terminal.print
 
 
         logger.info("Reset")
 
         logger.info("Turn Break Light On")
         await self.Vehicle.Body.Lights.IsBrakeOn.set(True)
-        await aio.sleep(2)
+        #await aio.sleep(2)
 
         logger.info("Turn Break Light Off")
         await self.Vehicle.Body.Lights.IsBrakeOn.set(False)
-        await aio.sleep(2)
+        #await aio.sleep(2)
 
         logger.info("Turn Break Light On")
         await self.Vehicle.Body.Lights.IsBrakeOn.set(True)
-        await aio.sleep(2)
-
-
+        #await aio.sleep(2)
 
 async def main():
-
-
     logger.info("Starting BreaklightteamblueApp...")
     vehicle_app = BreaklightteamblueApp(vehicle)
     await vehicle_app.run()
