@@ -36,11 +36,14 @@ logging.getLogger().setLevel("DEBUG")
 logger = logging.getLogger(__name__)
 
 
-
 class BreaklightteamblueApp(VehicleApp):
     def __init__(self, vehicle_client: Vehicle):
         super().__init__()
         self.Vehicle = vehicle_client
+
+    async def on_speed_change(self, speedDataPoint):
+        speed = speedDataPoint.get(vehicle.Speed).value
+        logger.info(f"Speed: {speed}")
 
     async def on_start(self):
         #print = plugins.Terminal.print
@@ -48,17 +51,15 @@ class BreaklightteamblueApp(VehicleApp):
 
         logger.info("Reset")
 
-        logger.info("Turn Break Light On")
-        await self.Vehicle.Body.Lights.IsBrakeOn.set(True)
-        #await aio.sleep(2)
+        try:
+            # This is a valid set request, the Position is an actuator.
+            await vehicle.Body.Lights.IsBrakeOn.set(10)
+            logging.info("Set Position to 10")
+        except TypeError as error:
+            logging.error(str(error))
 
-        logger.info("Turn Break Light Off")
-        await self.Vehicle.Body.Lights.IsBrakeOn.set(False)
-        #await aio.sleep(2)
-
-        logger.info("Turn Break Light On")
-        await self.Vehicle.Body.Lights.IsBrakeOn.set(True)
-        #await aio.sleep(2)
+        await vehicle.Speed.subscribe(self.on_speed_change)
+        
 
 async def main():
     logger.info("Starting BreaklightteamblueApp...")
