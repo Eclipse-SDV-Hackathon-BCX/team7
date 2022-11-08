@@ -27,7 +27,7 @@ metadata:
 spec:
   containers:
     - name: sampleapp
-      imagePullPolicy: IfNotPresent
+      imagePullPolicy: Always
       ports:
         - containerPort: 50008
       env:
@@ -43,7 +43,7 @@ spec:
 
       # remote registry, 'docker login ghcr.io' with GitHub PAT needed
       # see https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/#registry-secret-existing-credentials
-      image: ghcr.io/eclipse-velocitas/vehicle-app-python-template/sampleapp:0.0.1-bcx
+      image: ghcr.io/eclipse-sdv-hackathon-bcx/team7/velocitas:latest
 
   imagePullSecrets:
-  - name: regcred
+  - name: ghcr-secret
