@@ -46,15 +46,16 @@ class BreaklightteamblueApp(VehicleApp):
         logger.info(f"Speed: {speed}")
 
     async def on_start(self):
-        #print = plugins.Terminal.print
-
-
         logger.info("Reset")
 
         try:
             # This is a valid set request, the Position is an actuator.
             await vehicle.Body.Lights.IsBrakeOn.set(10)
             logging.info("Set Position to 10")
+            await vehicle.CurrentLocation.Latitude.set(12.3)CurrentLocation.Latitude
+            logging.info("Set Latitude to 12.3")
+            await vehicle.CurrentLocation.Longitude.set(25.4)CurrentLocation.Latitude
+            logging.info("Set Longitude to 25.4")
         except TypeError as error:
             logging.error(str(error))
 

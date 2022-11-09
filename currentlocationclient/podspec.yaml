@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: brakelight-service
+spec:
+  imagePullSecrets:
+  - name: ghcr-secret
+  containers:
+    - image: ghcr.io/eclipse-sdv-hackathon-bcx/team7/brakelight-service:latest
+      name: brakelight-service
+      imagePullPolicy: Always
+      args:
+        - --addr=vehicledatabroker-nodeport:55555
