@@ -52,9 +52,9 @@ class BreaklightteamblueApp(VehicleApp):
             # This is a valid set request, the Position is an actuator.
             await vehicle.Body.Lights.IsBrakeOn.set(10)
             logging.info("Set Position to 10")
-            await vehicle.CurrentLocation.Latitude.set(12.3)CurrentLocation.Latitude
+            await vehicle.CurrentLocation.Latitude.set(12.3)
             logging.info("Set Latitude to 12.3")
-            await vehicle.CurrentLocation.Longitude.set(25.4)CurrentLocation.Latitude
+            await vehicle.CurrentLocation.Longitude.set(25.4)
             logging.info("Set Longitude to 25.4")
         except TypeError as error:
             logging.error(str(error))
