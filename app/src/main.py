@@ -35,6 +35,8 @@ logging.basicConfig(format=get_opentelemetry_log_format())
 logging.getLogger().setLevel("DEBUG")
 logger = logging.getLogger(__name__)
 
+MQTT_KUKSA_SPEED_TOPIC = "kuksa/speed"
+MQTT_DEBUG_TEST_TOPIC = "debug/test"
 
 class BreaklightteamblueApp(VehicleApp):
     def __init__(self, vehicle_client: Vehicle):
@@ -43,6 +45,10 @@ class BreaklightteamblueApp(VehicleApp):
 
     async def on_speed_change(self, speedDataPoint):
         speed = speedDataPoint.get(vehicle.Speed).value
+        await self.publish_mqtt_event(
+            MQTT_KUKSA_SPEED_TOPIC,
+            json.dumps({"speed": speed}),
+        )
         logger.info(f"Speed: {speed}")
 
     async def on_start(self):
@@ -61,6 +67,13 @@ class BreaklightteamblueApp(VehicleApp):
 
         await vehicle.Speed.subscribe(self.on_speed_change)
         
+@subscribe_topic(MQTT_DEBUG_TEST_TOPIC)
+async def on_get_speed_request_received(self, data: str) -> None:
+    logger.debug(
+        "Test flag received: %s",
+        MQTT_DEBUG_TEST_TOPIC,
+        data,
+    )
 
 async def main():
     logger.info("Starting BreaklightteamblueApp...")
