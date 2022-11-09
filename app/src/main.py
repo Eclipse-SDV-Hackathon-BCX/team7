@@ -74,10 +74,6 @@ class BreaklightteamblueApp(VehicleApp):
         await vehicle.CurrentLocation.Longitude.subscribe(self.on_location_change)
         await vehicle.CurrentLocation.Latitude.subscribe(self.on_location_change)
 
-        vehicle.CurrentLocation.Longitude.set(123)
-        vehicle.CurrentLocation.Latitude.set(100)
-        
-
 async def main():
     logger.info("Starting BreaklightteamblueApp...")
     vehicle_app = BreaklightteamblueApp(vehicle)
