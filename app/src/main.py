@@ -35,6 +35,7 @@ logging.basicConfig(format=get_opentelemetry_log_format())
 logging.getLogger().setLevel("DEBUG")
 logger = logging.getLogger(__name__)
 
+DATABROKER_SPEED_TOPIC = "kuksa/speed"
 
 class BreaklightteamblueApp(VehicleApp):
     def __init__(self, vehicle_client: Vehicle):
@@ -43,6 +44,10 @@ class BreaklightteamblueApp(VehicleApp):
 
     async def on_speed_change(self, speedDataPoint):
         speed = speedDataPoint.get(vehicle.Speed).value
+        await self.publish_mqtt_event(
+            DATABROKER_SPEED_TOPIC,
+            json.dumps({"speed": speed}),
+        )
         logger.info(f"Speed: {speed}")
 
     async def on_start(self):
