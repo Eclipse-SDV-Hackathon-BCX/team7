@@ -75,9 +75,6 @@ class BreaklightteamblueApp(VehicleApp):
         await vehicle.CurrentLocation.Longitude.subscribe(self.on_location_change)
         await vehicle.CurrentLocation.Latitude.subscribe(self.on_location_change)
 
-        vehicle.CurrentLocation.Longitude.set(123)
-        vehicle.CurrentLocation.Latitude.set(100)
-        
 @subscribe_topic(MQTT_DEBUG_TEST_TOPIC)
 async def on_get_speed_request_received(self, data: str) -> None:
     logger.info("bla")
