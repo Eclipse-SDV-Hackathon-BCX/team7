@@ -63,9 +63,7 @@ class BreaklightteamblueApp(VehicleApp):
             # This is a valid set request, the Position is an actuator.
             await vehicle.Body.Lights.IsBrakeOn.set(10)
             logging.info("Set Position to 10")
-            await vehicle.CurrentLocation.Latitude.set(12.3)
             logging.info("Set Latitude to 12.3")
-            await vehicle.CurrentLocation.Longitude.set(25.4)
             logging.info("Set Longitude to 25.4")
         except TypeError as error:
             logging.error(str(error))
@@ -77,7 +75,8 @@ class BreaklightteamblueApp(VehicleApp):
 
 @subscribe_topic(MQTT_DEBUG_TEST_TOPIC)
 async def on_get_speed_request_received(self, data: str) -> None:
-    logger.info("bla")
+    logger.info(data)
+
 
 async def main():
     logger.info("Starting BreaklightteamblueApp...")
