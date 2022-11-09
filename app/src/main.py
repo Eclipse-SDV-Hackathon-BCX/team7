@@ -50,6 +50,11 @@ class BreaklightteamblueApp(VehicleApp):
         )
         logger.info(f"Speed: {speed}")
 
+    async def on_location_change(self, new_location):
+        lat = new_location.get(vehicle.CurrentLocation.Latitude).value
+        lon = new_location.get(vehicle.CurrentLocation.Longitude).value
+        logger.info(f"Longitude: {lon} Latitude: {lat}")
+
     async def on_start(self):
         logger.info("Reset")
 
@@ -65,6 +70,12 @@ class BreaklightteamblueApp(VehicleApp):
             logging.error(str(error))
 
         await vehicle.Speed.subscribe(self.on_speed_change)
+
+        await vehicle.CurrentLocation.Longitude.subscribe(self.on_location_change)
+        await vehicle.CurrentLocation.Latitude.subscribe(self.on_location_change)
+
+        vehicle.CurrentLocation.Longitude.set(123)
+        vehicle.CurrentLocation.Latitude.set(100)
         
 
 async def main():
